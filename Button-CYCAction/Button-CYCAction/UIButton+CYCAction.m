@@ -7,9 +7,21 @@
 //
 
 #import "UIButton+CYCAction.h"
+#import <objc/runtime.h>
+
+static const void *modelKey = &modelKey;
+static const void *blockKey = &blockKey;
 
 @implementation UIButton (CYCAction)
 
+
+#pragma mark ========================================特殊属性=============================================
+- (id)model {
+    return objc_getAssociatedObject(self, modelKey);
+}
+- (void)setModel:(id)model {
+    objc_setAssociatedObject(self, modelKey, model, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
 
 #pragma mark ========================================normal=============================================
 
@@ -42,8 +54,17 @@
     [self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
 }
 
-
-
+#pragma mark - 快捷响应
+- (void)cycAction:(CYCButtonBlock)block {
+    objc_setAssociatedObject(self, blockKey, block, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    [self addNormalTarget:self action:@selector(blockAction)];
+}
+- (void)blockAction {
+    CYCButtonBlock block = objc_getAssociatedObject(self, blockKey);
+    if (block) {
+        block(self.tag);
+    }
+}
 
 
 

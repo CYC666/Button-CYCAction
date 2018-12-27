@@ -32,6 +32,11 @@
     btn.normalColor = [UIColor darkTextColor];
     [btn addNormalTarget:self action:@selector(btnButtonAction:)];
     
+    btn.model = @{@"time" : @"2018-12-27 23:14:00"};
+    
+    [btn cycAction:^(NSInteger index) {
+        CNSL(@"快捷block")
+    }];
     
     
 }
@@ -42,6 +47,14 @@
     
     CNSL(button.normalTitle)
     
+    NSDictionary *dic = button.model;
+    CNSL(dic[@"time"])
+    
 }
+
+
+
+
+
 
 @end

@@ -10,8 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+
+typedef void(^CYCButtonBlock)(NSInteger index);
+
 @interface UIButton (CYCAction)
 
+// =================================特殊属性=====================================
+@property (strong, nonatomic) id model; // 用于储存特定的数据
 
 // =================================normal=====================================
 @property (copy, nonatomic) NSString *normalTitle;
@@ -19,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIImage *normalImage;
 
 - (void)addNormalTarget:(nullable id)target action:(SEL)action;
-
+- (void)cycAction:(CYCButtonBlock)block;
 
 
 
